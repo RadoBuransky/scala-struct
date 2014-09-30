@@ -9,19 +9,17 @@ abstract class Struct[T] {
   def write(t: T, bb: ByteBuffer): StructRef
   def read(ref: StructRef, bb: ByteBuffer): T
 
-  protected def read(bb: ByteBuffer): T = read(NilStructRef, bb)
+  protected def read(bb: ByteBuffer): T = read(StructRef.nil, bb)
   protected def positionBefore(bb: ByteBuffer)(f: => Unit): StructRef = {
-    val result = IntStructRef(bb.position())
+    val result = StructRef(bb.position())
     f
     result
   }
 
   protected def positionAndRead[T](ref: StructRef, bb: ByteBuffer)(f: => T): T = {
     ref match {
-      case NilStructRef => // Don't do anything
-      case IntStructRef(r) => bb.position(r)
-      case ShortStructRef(r) => bb.position(r)
-      case ByteStructRef(r) => bb.position(r)
+      case StructRef.nil => // Don't do anything
+      case StructRef(r) => bb.position(r)
       case _ => throw new IllegalStateException("Unknown reference type!")
     }
 

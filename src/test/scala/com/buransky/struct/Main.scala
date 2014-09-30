@@ -1,7 +1,5 @@
 package com.buransky.struct
 
-import java.nio.ByteBuffer
-
 case class MyClass(a: Boolean, b: Int, c: Int, d: Double)
 case class MyClass2(a: Int, b: Int)
 
@@ -11,17 +9,22 @@ object MyAppStructs {
 }
 
 object Main {
-  import MyAppStructs._
+  import com.buransky.struct.MyAppStructs._
 
   def main(args: Array[String]) = {
-    val bb = ByteBuffer.allocate(256)
+    val small = StructBuilder(myClassStruct, 10)
+    val medium = new SmallStructBuilder(myClassStruct)
+    val large = new TinyStructBuilder(myClassStruct)
 
-    val pos1 = myClassStruct.write(MyClass(true, 42, 69, 13.65), bb)
-    val pos2 = myClassStruct.write(MyClass(false, 3, -100, 0.5), bb)
-    val pos3 = myClassStruct.write(MyClass(true, 999, -456, 0.66666666), bb)
+    val pos1 = small.append(MyClass(true, 42, 69, 13.65))
+    val pos2 = medium.appendSmall(MyClass(false, 3, -100, 0.5))
+    val pos3 = large.appendTiny(MyClass(true, 999, -456, 0.66666666))
 
-    println(myClassStruct.read(pos2, bb).toString)
-    println(myClassStruct.read(pos1, bb).toString)
-    println(myClassStruct.read(pos3, bb).toString)
+    println(small(pos1))
+    println(medium(pos1))
+    println(large(pos1))
+
+    println("Stop!")
+    Thread.sleep(15000)
   }
 }
