@@ -2,35 +2,6 @@ package com.buransky.struct
 
 import java.nio.ByteBuffer
 
-//==============================================================
-// Lib
-//==============================================================
-
-sealed trait StructRef extends Any
-private[struct] case object NilStructRef extends StructRef
-private[struct] case class IntStructRef(ref: Int) extends AnyVal with StructRef
-private[struct] case class ShortStructRef(ref: Short) extends AnyVal with StructRef
-private[struct] case class ByteStructRef(ref: Byte) extends AnyVal with StructRef
-
-object DefaultStructs {
-  implicit object IntStruct extends Struct[Int] {
-    override def write(t: Int, bb: ByteBuffer) = positionBefore(bb) { bb.putInt(t) }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.getInt }
-  }
-
-  implicit object BooleanStruct extends Struct[Boolean] {
-    override def write(t: Boolean, bb: ByteBuffer) =  positionBefore(bb) {
-      bb.put((if (t) 1 else 0).toByte)
-    }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.get == 1 }
-  }
-
-  implicit object DoubleStruct extends Struct[Double] {
-    override def write(t: Double, bb: ByteBuffer) =  positionBefore(bb) { bb.putDouble(t) }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.getDouble }
-  }
-}
-
 /**
  * (De)serialization logic between user-provided type and structure fields.
  */
@@ -87,35 +58,5 @@ object Struct {
         f1(a1.read(bb), a2.read(bb), a3.read(bb), a4.read(bb))
       }
     }
-  }
-}
-
-//==============================================================
-// User
-//==============================================================
-
-case class MyClass(a: Boolean, b: Int, c: Int, d: Double)
-case class MyClass2(a: Int, b: Int)
-
-object MyAppStructs {
-  import DefaultStructs._
-
-  val myClassStruct = Struct(MyClass.apply _, Function.unlift(MyClass.unapply))
-  val myClass2Struct = Struct(MyClass2.apply _, Function.unlift(MyClass2.unapply))
-}
-
-object Main {
-  import MyAppStructs._
-
-  def main(args: Array[String]) = {
-    val bb = ByteBuffer.allocate(256)
-
-    val pos1 = myClassStruct.write(MyClass(true, 42, 69, 13.65), bb)
-    val pos2 = myClassStruct.write(MyClass(false, 3, -100, 0.5), bb)
-    val pos3 = myClassStruct.write(MyClass(true, 999, -456, 0.66666666), bb)
-
-    println(myClassStruct.read(pos2, bb).toString)
-    println(myClassStruct.read(pos1, bb).toString)
-    println(myClassStruct.read(pos3, bb).toString)
   }
 }
