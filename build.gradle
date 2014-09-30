@@ -1,0 +1,17 @@
+apply plugin: 'scala'
+
+targetCompatibility = 1.6
+
+group = 'com.buransky'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.scala-lang:scala-library:2.11.2'
+
+    testCompile 'org.scalatest:scalatest_2.11:2.2.2'
+    testCompile 'junit:junit:4.11'
+}
