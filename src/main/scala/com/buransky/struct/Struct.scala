@@ -5,7 +5,7 @@ import java.nio.ByteBuffer
 /**
  * (De)serialization logic between user-provided type and structure fields.
  */
-abstract class Struct[T] {
+private[struct] abstract class Struct[T] {
   def write(t: T, bb: ByteBuffer): StructRef
   def read(ref: StructRef, bb: ByteBuffer): T
 

@@ -3,6 +3,7 @@ package com.buransky
 import java.nio.ByteBuffer
 
 package object struct {
+  implicit def structRefToInt(structRef: StructRef): Int = structRef.ref
 
   //====================================================================================================================
   // Built-in structures
