@@ -1,6 +1,6 @@
 package com.buransky.struct
 
-import scala.collection.mutable.ArrayBuffer
+import com.buransky.struct.mutable.{TinyFixedStructBuffer, SmallFixedStructBuffer, FixedStructBuffer}
 
 case class MyClass(a: Boolean, b: Int, c: Int, d: Double)
 case class MyClass2(a: Int, b: Int)
@@ -14,18 +14,18 @@ object Main {
   import com.buransky.struct.MyAppStructs._
 
   def main(args: Array[String]) = {
-    val small = new StructBuffer(myClassStruct)
-    val medium = new SmallStructBuffer(myClassStruct)
-    val large = new TinyStructBuffer(myClassStruct)
+    val small = new FixedStructBuffer(myClassStruct)
+    val medium = new SmallFixedStructBuffer(myClassStruct)
+    val large = new TinyFixedStructBuffer(myClassStruct)
 
     val pos1 = small.appendRef(MyClass(true, 42, 69, 13.65))
     val pos2 = medium.appendSmall(MyClass(false, 3, -100, 0.5))
     val pos3 = large.appendTiny(MyClass(true, 999, -456, 0.66666666))
 
-    println(small(pos1))
-    println(medium(pos1))
-    println(large(pos1))
+    val all = small ++ medium ++ large
+    all += MyClass(false, -44, -44, -44)
 
-    small.foreach(println)
+    val is = all.toIndexedSeq
+    is.foreach(println)
   }
 }
