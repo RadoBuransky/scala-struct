@@ -15,3 +15,8 @@ dependencies {
     testCompile 'org.scalatest:scalatest_2.11:2.2.2'
     testCompile 'junit:junit:4.11'
 }
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
+    scalaCompileOptions.additionalParameters = ["-feature"]
+}

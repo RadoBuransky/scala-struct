@@ -1,6 +1,7 @@
 package com.buransky
 
 import java.nio.ByteBuffer
+import scala.language.implicitConversions
 
 package object struct {
   implicit def structRefToInt(structRef: StructRef): Int = structRef.ref
