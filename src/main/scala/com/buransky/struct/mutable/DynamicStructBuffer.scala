@@ -7,6 +7,7 @@ import com.buransky.struct._
 import scala.collection.generic.{CanBuildFrom, GenericCompanion, GenericTraversableTemplate, SeqFactory}
 import scala.collection.{ mutable => cm }
 
+//TODO: Rewrite to LinearSeq
 class DynamicStructBuffer[A](struct: Struct[A])
   extends cm.AbstractBuffer[A]
   with cm.Buffer[A]
