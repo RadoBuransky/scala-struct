@@ -1,6 +1,5 @@
 package com.buransky
 
-import java.nio.ByteBuffer
 import scala.language.implicitConversions
 
 package object struct {
@@ -14,25 +13,23 @@ package object struct {
    * Integer structure
    */
   implicit object IntStruct extends Struct[Int] {
-    override def write(t: Int, bb: ByteBuffer) = positionBefore(bb) { bb.putInt(t) }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.getInt }
+    override def write(t: Int, byteStore: ByteStore) = byteStore.put(t)
+    override def read(byteStore: ByteStore) = byteStore.readInt()
   }
 
   /**
    * Boolean structure
    */
   implicit object BooleanStruct extends Struct[Boolean] {
-    override def write(t: Boolean, bb: ByteBuffer) =  positionBefore(bb) {
-      bb.put((if (t) 1 else 0).toByte)
-    }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.get == 1 }
+    override def write(t: Boolean, byteStore: ByteStore) = byteStore.put(t)
+    override def read(byteStore: ByteStore) = byteStore.readBoolean()
   }
 
   /**
    * Double structure
    */
   implicit object DoubleStruct extends Struct[Double] {
-    override def write(t: Double, bb: ByteBuffer) =  positionBefore(bb) { bb.putDouble(t) }
-    override def read(ref: StructRef, bb: ByteBuffer) = positionAndRead(ref, bb) { bb.getDouble }
+    override def write(t: Double, byteStore: ByteStore) = byteStore.put(t)
+    override def read(byteStore: ByteStore) = byteStore.readDouble()
   }
 }

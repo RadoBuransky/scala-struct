@@ -1,12 +1,10 @@
 package com.buransky.struct.mutable
 
-import java.nio.ByteBuffer
-
 import com.buransky.struct._
 import com.buransky.struct.immutable.StructVector
 
 import scala.collection.generic.{CanBuildFrom, GenericCompanion, GenericTraversableTemplate, SeqFactory}
-import scala.collection.{mutable => cm, immutable}
+import scala.collection.{immutable, mutable => cm}
 
 class FixedStructBuffer[A](struct: Struct[A])
   extends cm.AbstractBuffer[A]
@@ -38,10 +36,10 @@ class FixedStructBuffer[A](struct: Struct[A])
 
   override def +=(elem: A): this.type = {
     checkReadonly()
-    struct.write(elem, byteBuffer)
+    struct.write(elem, byteStore)
 
     structSize match {
-      case None => structSize = Some(byteBuffer.position())
+      case None => structSize = Some(byteStore.position)
       case _ => // We've already got the structrure size
     }
 
@@ -51,7 +49,7 @@ class FixedStructBuffer[A](struct: Struct[A])
 
   override def clear(): Unit = {
     checkReadonly()
-    byteBuffer.clear()
+    byteStore.clear()
     _length = 0
   }
 
@@ -61,7 +59,8 @@ class FixedStructBuffer[A](struct: Struct[A])
     if (isEmpty)
       throw new IndexOutOfBoundsException
 
-    struct.read(StructRef(v1 * structSize.get), byteBuffer)
+    byteStore.position = v1 * structSize.get
+    struct.read(byteStore)
   }
 
   override def result(): FixedStructBuffer[A] = this
@@ -72,7 +71,7 @@ class FixedStructBuffer[A](struct: Struct[A])
   override def remove(n: Int): A = ???
   override def insertAll(n: Int, elems: Traversable[A]): Unit = ???
 
-  private lazy val byteBuffer = ByteBuffer.allocate(256)
+  private lazy val byteStore = new ByteBufferStore()
   private var _length = 0
   private var structSize: Option[Int] = None
   private var structVector: Option[StructVector[A]] = None
