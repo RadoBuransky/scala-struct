@@ -3,17 +3,15 @@ package com.buransky
 import scala.language.implicitConversions
 
 package object struct {
-  implicit def structRefToInt(structRef: StructRef): Int = structRef.ref
-
   //====================================================================================================================
-  // Built-in structures
+  // Built-in structures for common data types
   //====================================================================================================================
 
   /**
    * Integer structure
    */
   implicit object IntStruct extends Struct[Int] {
-    override def write(t: Int, byteStore: ByteStore) = byteStore.put(t)
+    override def put(inst: Int, byteStore: ByteStore) = byteStore.put(inst)
     override def read(byteStore: ByteStore) = byteStore.readInt()
   }
 
@@ -21,7 +19,7 @@ package object struct {
    * Boolean structure
    */
   implicit object BooleanStruct extends Struct[Boolean] {
-    override def write(t: Boolean, byteStore: ByteStore) = byteStore.put(t)
+    override def put(inst: Boolean, byteStore: ByteStore) = byteStore.put(inst)
     override def read(byteStore: ByteStore) = byteStore.readBoolean()
   }
 
@@ -29,7 +27,7 @@ package object struct {
    * Double structure
    */
   implicit object DoubleStruct extends Struct[Double] {
-    override def write(t: Double, byteStore: ByteStore) = byteStore.put(t)
+    override def put(inst: Double, byteStore: ByteStore) = byteStore.put(inst)
     override def read(byteStore: ByteStore) = byteStore.readDouble()
   }
 }

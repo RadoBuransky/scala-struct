@@ -36,7 +36,7 @@ class FixedStructBuffer[A](struct: Struct[A])
 
   override def +=(elem: A): this.type = {
     checkReadonly()
-    struct.write(elem, byteStore)
+    struct.put(elem, byteStore)
 
     structSize match {
       case None => structSize = Some(byteStore.position)
