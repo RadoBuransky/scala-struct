@@ -16,11 +16,6 @@ class FixedStructBuffer[A](struct: Struct[A])
      with cm.Builder[A, FixedStructBuffer[A]]
      with Serializable {
 
-  def appendRef(elem: A): StructRef = {
-    this += elem
-    StructRef(length - 1)
-  }
-
   override def companion: GenericCompanion[FixedStructBuffer] = StructBuffer
 
   override def seq: cm.IndexedSeq[A] = this
@@ -89,12 +84,4 @@ class FixedStructBuffer[A](struct: Struct[A])
     def newBuilder[T]: cm.Builder[T, FixedStructBuffer[T]] =
       new FixedStructBuffer[T](struct.asInstanceOf[Struct[T]])
   }
-}
-
-class SmallFixedStructBuffer[A](struct: Struct[A]) extends FixedStructBuffer[A](struct) {
-  def appendSmall(elem: A): SmallStructRef = SmallStructRef(super.appendRef(elem).ref.toShort)
-}
-
-class TinyFixedStructBuffer[A](struct: Struct[A]) extends SmallFixedStructBuffer[A](struct) {
-  def appendTiny(elem: A): TinyStructRef = TinyStructRef(super.appendRef(elem).ref.toByte)
 }
