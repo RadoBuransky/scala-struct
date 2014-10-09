@@ -41,27 +41,27 @@ class GrowableByteStoreSpec extends FlatSpec with PropertyChecks {
     testPut(4, _.put(_: Float), _.readFloat())
   }
 
-  private def putTwo[T](capacity: Int, growBy: Int, a: T, b: T, tSize: Int,
+  private def putTwo[T](capacity: Int, growBy: Int, nums: List[T], tSize: Int,
                         put: (ByteStore, T) => Unit, read: (ByteStore) => T): Unit = {
     val byteStore = new GrowableByteStore(capacity, growBy)
 
     assert(byteStore.capacity === capacity)
 
-    put(byteStore, a)
+    var cap = capacity
+    var totalSize = 0
+    nums.foreach { num =>
+      put(byteStore, num)
+      totalSize += tSize
 
-    val capacityA = newCapacity(capacity, growBy, tSize)
-    assert(byteStore.capacity === capacityA)
-
-    put(byteStore, b)
-
-    val capacityB = newCapacity(capacityA, growBy, 2 * tSize)
-    assert(byteStore.capacity === capacityB)
+      cap = newCapacity(cap, growBy, totalSize)
+      assert(byteStore.capacity === cap)
+    }
 
     byteStore.position = 0
 
-    assert(read(byteStore) === a)
-    assert(read(byteStore) === b)
-
+    nums.foreach { num =>
+      assert(read(byteStore) === num)
+    }
   }
 
   private def newCapacity(capacity: Int, growBy: Int, tSize: Int): Int = {
@@ -76,8 +76,8 @@ class GrowableByteStoreSpec extends FlatSpec with PropertyChecks {
 
   private def testPut[T](size: Int,putT: (ByteStore, T) => Unit, readT: (ByteStore) => T)(implicit arbA: Arbitrary[T]) {
     forAll(smallInitialCapacity, smallGrowBy) { (capacity, growBy) =>
-      forAll { (a: T, b: T) =>
-        putTwo(capacity, growBy, a, b, size, putT, readT)
+      forAll { (nums: List[T]) =>
+        putTwo(capacity, growBy, nums, size, putT, readT)
       }
     }
   }
