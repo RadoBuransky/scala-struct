@@ -1,10 +1,13 @@
-package com.buransky.struct.mutable
+package com.buransky.struct.store
 
 import java.nio.ByteBuffer
+import scala.collection.JavaConversions._
 
-import com.buransky.struct.ByteStore
-
-private[mutable] class ByteBufferStore extends ByteStore {
+/**
+ * Continuous array of bytes in memory.
+ * @param capacity Initial capacity of the array in bytes.
+ */
+private[store] class ByteBufferStore(val capacity: Int) extends ByteStore {
   /**
    * Appends a single Byte to this store and returns the identity of the store.
    * @param b the Byte to append.
@@ -119,21 +122,20 @@ private[mutable] class ByteBufferStore extends ByteStore {
   /**
    * Clears this store.
    */
-  def clear(): Unit = byteBuffer.clear()
+  override def clear(): Unit = byteBuffer.clear()
 
   /**
    * Gets actual position in bytes.
    * @return actual position in bytes.
    */
-  def position: Int = byteBuffer.position()
+  override def position: Int = byteBuffer.position()
 
   /**
    * Sets actual position in bytes.
    */
-  def position_= (pos: Int): Unit = byteBuffer.position(pos)
-
+  override def position_= (pos: Int): Unit = byteBuffer.position(pos)
   /**
    * Underlying byte buffer. The real storage.
    */
-  private lazy val byteBuffer = ByteBuffer.allocate(256)
+  private[store] lazy val byteBuffer = ByteBuffer.allocate(capacity)
 }

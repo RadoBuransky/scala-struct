@@ -1,5 +1,7 @@
 package com.buransky
 
+import com.buransky.struct.store.ByteStore
+
 import scala.language.implicitConversions
 
 package object struct {

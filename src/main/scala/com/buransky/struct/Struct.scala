@@ -1,5 +1,7 @@
 package com.buransky.struct
 
+import com.buransky.struct.store.ByteStore
+
 /**
  * Definition of a structure for the given type.
  * @tparam T type of entity to be stored by the structure

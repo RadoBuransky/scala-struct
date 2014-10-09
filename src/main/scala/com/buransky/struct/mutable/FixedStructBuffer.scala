@@ -2,6 +2,7 @@ package com.buransky.struct.mutable
 
 import com.buransky.struct._
 import com.buransky.struct.immutable.StructVector
+import com.buransky.struct.store.{ByteStore, ByteBufferStore}
 
 import scala.collection.generic.{CanBuildFrom, GenericCompanion, GenericTraversableTemplate, SeqFactory}
 import scala.collection.{immutable, mutable => cm}
@@ -66,7 +67,7 @@ class FixedStructBuffer[A](struct: Struct[A])
   override def remove(n: Int): A = ???
   override def insertAll(n: Int, elems: Traversable[A]): Unit = ???
 
-  private lazy val byteStore = new ByteBufferStore()
+  private lazy val byteStore = ByteStore()
   private var _length = 0
   private var structSize: Option[Int] = None
   private var structVector: Option[StructVector[A]] = None

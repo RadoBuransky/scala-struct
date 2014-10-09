@@ -1,6 +1,6 @@
-package com.buransky.struct
+package com.buransky.struct.store
 
-trait ByteStore {
+private[struct] trait ByteStore {
   /**
    * Appends a single Byte to this store and returns the identity of the store.
    * @param b the Byte to append.
@@ -91,4 +91,37 @@ trait ByteStore {
    * @return the Boolean read,
    */
   def readBoolean(): Boolean
+
+  /**
+   * Clears this store.
+   */
+  def clear(): Unit
+
+  /**
+   * Maximal capacity of the byte store in bytes.
+   */
+  def capacity: Int
+
+  /**
+   * Gets actual position in bytes.
+   * @return actual position in bytes.
+   */
+  def position: Int
+
+  /**
+   * Sets actual position in bytes.
+   */
+  def position_= (pos: Int)
+}
+
+private[struct] object ByteStore {
+  val defaultInitialCapacity = 256
+  val defaultGrowBy = 256
+
+  def apply(initialCapacity: Int = defaultInitialCapacity, growBy: Int = defaultGrowBy): ByteStore = {
+    if (growBy > 0)
+      new GrowableByteStore(initialCapacity, growBy)
+    else
+      new ByteBufferStore(initialCapacity)
+  }
 }
