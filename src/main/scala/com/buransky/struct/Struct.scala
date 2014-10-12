@@ -26,12 +26,12 @@ private[struct] trait Struct[T] {
  * Companion object, Provides factory methods for structures.
  */
 object Struct {
-  def apply[A1, B](applyB: Function1[A1, B], unapplyB: Function1[B, Tuple1[A1]])
+  def apply[A1, B](applyB: Function1[A1, B], unapplyB: Function1[B, A1])
                       (implicit a1Struct: Struct[A1]) = {
     new Struct[B] {
       override def put(t: B, byteStore: ByteStore) = {
         val a = unapplyB(t)
-        a1Struct.put(a._1, byteStore)
+        a1Struct.put(a, byteStore)
       }
 
       override def read(byteStore: ByteStore): B = {
@@ -39,6 +39,7 @@ object Struct {
       }
     }
   }
+
 
   def apply[A1, A2, B](applyB: Function2[A1, A2, B], unapplyB: Function1[B, Tuple2[A1, A2]])
                       (implicit a1Struct: Struct[A1], a2Struct: Struct[A2]) = {
