@@ -37,8 +37,8 @@ Simple example
       }
     }
     
-6 time less memory example
---------------------------
+6 times less memory example
+---------------------------
 This example compares Java heap memory consumption of Scala Struct with standard mutable ArrayBuffer. The result is that
 Scala Struct takes *6 times less space* in memory.
 
@@ -83,8 +83,8 @@ Scala Struct takes *6 times less space* in memory.
       }
     }
     
-Supported features in version 0.1.0
------------------------------------
-*Basic value types* - Byte, Short, Int, Long, Float, Double, Boolean 
-*Fixed buffer* - byte buffer which can store structres with fixed size
-*Strcutres with up to 22 fields* - Scala limits tuple size to 22
+Supported features
+------------------
+- **Basic value types** - Byte, Short, Int, Long, Float, Double, Boolean
+- **Fixed buffer** - byte buffer which can store structres with fixed size
+- **Strcutres with up to 22 fields** - Scala limits tuple size to 22
