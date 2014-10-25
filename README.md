@@ -7,6 +7,10 @@ Scala library for memory-optimized structures.
 Easily store fixed-size data structures in a byte buffer and retrieve them later. Significantly reduces memory
 requirements especially when large numbers of small structures have to be kept in memory.
 
+Download
+--------
+[Get the latest binary JAR of Scala Struct](https://github.com/RadoBuransky/scala-struct/releases/download/v1.0.0/scala-struct-1.0.0.jar)
+
 Simple example
 --------------
 
