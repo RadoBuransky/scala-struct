@@ -10,10 +10,13 @@ buildscript {
 
 apply plugin: 'scala'
 apply plugin: org.scoverage.ScoveragePlugin
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 targetCompatibility = 1.6
 
 group = 'com.buransky'
+archivesBaseName = rootProject.name
 version = '1.0.0'
 
 repositories {
@@ -34,4 +37,67 @@ dependencies {
 tasks.withType(ScalaCompile) {
     scalaCompileOptions.useAnt = false
     scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'Scala Struct'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'Scala library for memory-optimized structures.'
+                url 'https://github.com/RadoBuransky/scala-struct'
+
+                scm {
+                    connection 'https://github.com/RadoBuransky/scala-struct.git'
+                    developerConnection 'https://github.com/RadoBuransky/scala-struct.git'
+                    url 'https://github.com/RadoBuransky/scala-struct.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'radoburansky'
+                        name 'Rado Buransky'
+                        email 'radoburansky@gmail.com'
+                    }
+                }
+            }
+        }
+    }
 }
