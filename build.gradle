@@ -1,4 +1,15 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/groups/public" }
+    }
+    dependencies {
+        classpath 'org.scoverage:gradle-scoverage:0.6-SNAPSHOT'
+    }
+}
+
 apply plugin: 'scala'
+apply plugin: org.scoverage.ScoveragePlugin
 
 targetCompatibility = 1.6
 
@@ -16,6 +27,8 @@ dependencies {
     testCompile 'junit:junit:4.11'
     testCompile 'org.scalacheck:scalacheck_2.11:1.11.6'
     testCompile 'org.mockito:mockito-all:1.9.5'
+
+    scoverage 'org.scoverage:scalac-scoverage-plugin_2.11:0.99.5'
 }
 
 tasks.withType(ScalaCompile) {
