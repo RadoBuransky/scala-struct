@@ -14,7 +14,7 @@ apply plugin: org.scoverage.ScoveragePlugin
 targetCompatibility = 1.6
 
 group = 'com.buransky'
-version = '0.1.0'
+version = '1.0.0'
 
 repositories {
     mavenCentral()

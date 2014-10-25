@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/RadoBuransky/scala-struct.svg?branch=master)](https://travis-ci.org/RadoBuransky/scala-struct)
-Scala Struct 0.1.0
+Scala Struct 1.0.0
 ==================
 
-Scala library for memory-optimized structures. Store fixed-size data structures in a byte buffer and retrieve them
-later. 
+Scala library for memory-optimized structures.  
+
+Easily store fixed-size data structures in a byte buffer and retrieve them later. Significantly reduces memory
+requirements especially when large numbers of small structures have to be kept in memory.
 
 Simple example
 --------------
@@ -40,7 +42,7 @@ Simple example
 6 times less memory example
 ---------------------------
 This example compares Java heap memory consumption of Scala Struct with standard mutable ArrayBuffer. The result is that
-Scala Struct takes *6 times less space* in memory.
+Scala Struct takes *6 times less space* in memory. 5 MB versus 29 MB.
 
     object SimpleMemoryComparisonExample {
       // Simple case class that we would like to store efficiently in the buffer,
@@ -87,4 +89,4 @@ Supported features
 ------------------
 - **Basic value types** - Byte, Short, Int, Long, Float, Double, Boolean
 - **Fixed buffer** - byte buffer which can store structres with fixed size
-- **Strcutres with up to 22 fields** - Scala limits tuple size to 22
+- **Case classes with up to 22 fields** - Scala limits tuple size to 22
