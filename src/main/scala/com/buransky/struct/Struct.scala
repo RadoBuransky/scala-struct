@@ -40,7 +40,6 @@ object Struct {
     }
   }
 
-
   def apply[A1, A2, B](applyB: Function2[A1, A2, B], unapplyB: Function1[B, Tuple2[A1, A2]])
                       (implicit a1Struct: Struct[A1], a2Struct: Struct[A2]) = {
     new Struct[B] {
