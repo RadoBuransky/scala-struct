@@ -41,6 +41,28 @@ class GrowableByteStoreSpec extends FlatSpec with PropertyChecks {
     testPut(4, _.put(_: Float), _.readFloat())
   }
 
+  behavior of "put double"
+
+  it should "ensure to grow" in {
+    testPut(8, _.put(_: Double), _.readDouble())
+  }
+
+  behavior of "put boolean"
+
+  it should "ensure to grow" in {
+    testPut(1, _.put(_: Boolean), _.readBoolean())
+  }
+
+  behavior of "clear"
+
+  it should "ensure to grow" in {
+    val byteStore = new GrowableByteStore(1, 1)
+    byteStore.put(3: Byte)
+    assert(byteStore.position === 1)
+    byteStore.clear()
+    assert(byteStore.position === 0)
+  }
+
   private def putTwo[T](capacity: Int, growBy: Int, nums: List[T], tSize: Int,
                         put: (ByteStore, T) => Unit, read: (ByteStore) => T): Unit = {
     val byteStore = new GrowableByteStore(capacity, growBy)
