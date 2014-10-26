@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/RadoBuransky/scala-struct.svg?branch=master)](https://travis-ci.org/RadoBuransky/scala-struct)
+[![Build Status](https://travis-ci.org/RadoBuransky/scala-struct.svg?branch=master)](https://travis-ci.org/RadoBuransky/scala-struct) [![Coverage Status](https://coveralls.io/repos/RadoBuransky/scala-struct/badge.png)](https://coveralls.io/r/RadoBuransky/scala-struct)
 Scala Struct 1.0.0
 ==================
 
