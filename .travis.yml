@@ -1,3 +1,10 @@
 language: java
-script: ./gradlew cobertura coveralls
-install: /bin/true
+
+env:
+- TERM=dumb
+
+script:
+- ./gradlew cobertura coveralls
+
+install:
+- /bin/true

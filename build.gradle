@@ -110,3 +110,4 @@ uploadArchives {
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+cobertura.coverageSourceDirs = sourceSets.main.scala.srcDirs
