@@ -7,8 +7,54 @@ Scala library for memory-optimized structures.
 Easily store fixed-size data structures in a byte buffer and retrieve them later. Significantly reduces memory
 requirements especially when large numbers of small structures have to be kept in memory.
 
-Download
---------
+Use as a dependency
+-------------------
+
+Configure your Maven, Gradle or SBT build script to use Sonatype OSS release repository and add dependency to Scala
+Struct.
+
+*Gradle*
+
+```Groovy
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/releases" }
+}
+
+dependencies {
+    compile 'com.buransky:scala-struct:1.0.0'
+}
+```
+
+*SBT*
+
+```Scala
+resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases"
+
+libraryDependencies += "com.buransky" % "scala-struct" % "1.0.0"
+```
+
+*Maven*
+
+```XML
+<repositories>
+    <repository>
+        <id>oss-sonatype</id>
+        <name>oss-sonatype</name>
+        <url>https://oss.sonatype.org/content/repositories/releases/</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.buransky</groupId>
+        <artifactId>scala-struct</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+<dependencies>
+```
+
+Manual download
+---------------
 [Get the latest binary JAR of Scala Struct](https://github.com/RadoBuransky/scala-struct/releases/download/v1.0.0/scala-struct-1.0.0.jar)
 
 Simple example
