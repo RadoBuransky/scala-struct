@@ -53,7 +53,7 @@ libraryDependencies += "com.buransky" % "scala-struct" % "1.0.0"
 <dependencies>
 ```
 
-Manual download
+Download
 ---------------
 [Get the latest binary JAR of Scala Struct](https://github.com/RadoBuransky/scala-struct/releases/download/v1.0.0/scala-struct-1.0.0.jar)
 
